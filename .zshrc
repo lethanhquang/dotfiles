@@ -1,45 +1,42 @@
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 # Setting for the new UTF-8 terminal support in Lion
-LC_CTYPE=en_US.UTF-8
-LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export TERM=xterm-256color
 
 # z command
-. /usr/local/bin/z.sh
+. /usr/local/Cellar/z/1.9/etc/profile.d/z.sh
 
 # Aliases
+alias ll="ls -al"
 alias zshconfig="vim ~/.zshrc"
 alias vimconfig="vim ~/.vimrc"
-alias ll="ls -al"
-# alias tmux="tmux -u"
-alias vim="/opt/homebrew-cask/Caskroom/macvim/7.4-73/MacVim-snapshot-73/MacVim.app/Contents/MacOS/Vim"
-
+alias ohmyzsh="vim ~/.oh-my-zsh"
+alias vim='/usr/local/bin/mvim -v'
+alias em='emacs'
+alias tmux="tmux -u"
 # Config zsh plugins
-plugins=(git)
+plugins=(git z)
 
 # User configuration
-DEFAULT_USER="quangrau"
+DEFAULT_USER="quangle"
 
-#export PATH=$PATH:/Users/quangrau/.rvm/gems/ruby-2.1.3/bin:/Users/quangrau/.rvm/gems/ruby-2.1.3@global/bin:/Users/quangrau/.rvm/rubies/ruby-2.1.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Users/quangrau/.rvm/bin
-#export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin
+export NVM_DIR="$HOME/.nvm"
+  . "/usr/local/opt/nvm/nvm.sh"
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:~/bin:$PATH
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export PATH="$PATH:$HOME/.yarn/bin" #Add Yarn to PATH
 
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+# Rbenv
+eval "$(rbenv init -)"
 
-# The next line updates PATH for the Google Cloud SDK.
-#source '/Users/quangrau/google-cloud-sdk/path.zsh.inc'
-
-# The next line enables shell command completion for gcloud.
-#source '/Users/quangrau/google-cloud-sdk/completion.zsh.inc'
+# Android SDK via Homebrew
+# export ANDROID_HOME=/usr/local/opt/android-sdk
+export ANDROID_HOME=/usr/local/Cellar/android-sdk/24.4.1_1
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
