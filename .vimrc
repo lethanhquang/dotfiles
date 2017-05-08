@@ -87,6 +87,15 @@ Plug 'jiangmiao/auto-pairs'
 
 " Search
 Plug 'mileszs/ack.vim'
+" Fuzzy
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
+
+" Themes
+Plug 'morhetz/gruvbox'
+
+" Icons
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -192,15 +201,21 @@ set title
 " Enable syntax highlighting
 syntax enable
 
-" Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
-  set t_Co=256
-endif
+" Enable true color
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+" Neovim/Vim True Color support
+set termguicolors
+
+" Set theme background
+set background=dark
 
 " Set theme name
-let base16colorspace=256  " Access colors present in 256 colorspace"
-set background=dark
+let base16colorspace=256  " Access colors present in 256 colorspace
+" let g:hybrid_custom_term_colors = 1
+" let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 colorscheme hybrid
+" colorscheme gruvbox
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -503,6 +518,10 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 """"""""""""""""""""""""""""""
 " => Python section
 """"""""""""""""""""""""""""""
+" setup python path
+let g:python_host_prog = '/usr/local/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 let python_highlight_all = 1
 " au FileType python syn keyword pythonDecorator True None False self
 
@@ -606,13 +625,14 @@ autocmd FileType vimfiler call s:vimfiler_settings()
 " => CTRL-P
 "----------------------------------------------------------------
 set runtimepath^=~/.vim/plugged/ctrlp.vim
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX"
-let g:ctrlp_custom_ignore = '\v[\/]\.(^\.DS_Store\|git|hg|svn|vscode|idea|node_modules)$'
-let g:ctrlp_max_height = 20
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-  let g:ackprg = 'ag --vimgrep'
-endif
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
+let g:ctrlp_user_command = ['.git', 'cd %s; and git ls-files -co --exclude-standard']
 
 
 "----------------------------------------------------------------
@@ -653,10 +673,10 @@ let g:airline#extensions#tabline#enabled = 1
 " let g:syntastic_auto_loc_list = 0
 " let g:syntastic_check_on_open = 0
 " let g:syntastic_check_on_wq = 1
-" let g:syntastic_error_symbol = '❌'
-" let g:syntastic_style_error_symbol = '⁉️'
-" let g:syntastic_warning_symbol = '⚠️'
-" let g:syntastic_style_warning_symbol = '💩'
+" let g:syntastic_error_symbol = '‚ùå'
+" let g:syntastic_style_error_symbol = '‚ÅâÔ∏è'
+" let g:syntastic_warning_symbol = '‚ö†Ô∏è'
+" let g:syntastic_style_warning_symbol = 'üí©'
 
 " highlight link SyntasticErrorSign SignColumn
 " highlight link SyntasticWarningSign SignColumn
@@ -762,10 +782,10 @@ if findfile('.eslintrc', '.;') !=# ''
   let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
 endif
 let g:neomake_warning_sign = {
-  \ 'text': 'W',
+  \ "text": ">",
   \ 'texthl': 'WarningMsg',
   \ }
 let g:neomake_error_sign = {
-  \ 'text': '>',
+  \ 'text': 'x',
   \ 'texthl': 'ErrorMsg',
   \ }
